@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
@@ -18,7 +19,9 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    'style-loader',
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
                     {
                         loader: 'css-loader'
                     }
@@ -48,15 +51,23 @@ module.exports = {
         // 设置全局变量
         new webpack.ProvidePlugin({
             _: 'lodash'
-        })
-        // new ExtractTextPlugin('style.css')
+        }),
+        // 提取css并且给css增加hash值。
+        new MiniCssExtractPlugin(
+            {
+                filename: '[name].css',
+                chunkFilename: '[contenthash]_[name].css',
+                ignoreOrder: false
+            }
+        )
     ],
     optimization: {
         // 配置公共模块
         splitChunks: {
             cacheGroups: {
                 commons: {
-                    name: "vendor"
+                    chunks: 'all',
+                    name: "common"
                 }
             }
         },
@@ -70,5 +81,9 @@ module.exports = {
                 }
             })
         ]
+    },
+    // 打包时候忽略某个模块文件
+    externals: {
+        jquery: 'jQuery'
     }
 }

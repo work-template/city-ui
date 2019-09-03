@@ -1,4 +1,4 @@
-# webpack 配置与优化总结
+# webpack 配置与优化(输出质量)总结
 * 版本：webpack-4.39.2
 * 1:定义webpack环境-process.env.NODE_ENV做一些特别的配置，开发时候更好的体验，生产环境更小的体积。使用
 ```
@@ -61,3 +61,9 @@ const OptimizeCssAssetsPlugin =  require('optimize-css-assets-webpack-plugin')
 
 ```
 
+* 6: 配置externals：防止将某些import的包打包到bundle中而是在运行时才去获取，（减小打包时候的体积）
+```
+externals: {
+   jquery: 'jQuery'
+}
+```

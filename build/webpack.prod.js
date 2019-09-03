@@ -8,7 +8,7 @@ module.exports = merge(common, {
     devtool: 'souce-map',
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: "[chunkhash].bundle.js"
+        filename: "[chunkhash].[name].js"
     },
     plugins: [
         new CleanWebpackPlugin(),
