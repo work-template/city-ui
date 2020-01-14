@@ -46,7 +46,7 @@ module.exports = {
         // 生成index.html文件
         new HtmlWebpackPlugin({
             title: 'demo',
-            template: path.resolve(__dirname,'../src/index.html')
+            template:  '../src/index.html'
         }),
         // 设置全局变量
         new webpack.ProvidePlugin({
