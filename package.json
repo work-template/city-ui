@@ -1,16 +1,23 @@
 {
-  "name": "element-ui",
+  "name": "city-ui",
   "version": "1.0.0",
-  "description": "",
+  "repository": {
+    "url": "https://github.com/work-template/city-ui.git",
+    "type": "gogs"
+  },
+  "description": "ui package base element-ui",
   "main": "./src/index.js",
   "scripts": {
-    "bootstrap": "npm i",
+    "bootstrap": "npm i || yarn",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config build/webpack.prod.js --mode=production --display-used-exports",
     "dev": "webpack-dev-server --config build/webpack.dev.js --mode=development --open",
     "dev:doc": "webpack-dev-server --config build/webpack.demo.js --mode=development"
   },
-  "author": "",
+  "bugs": {
+    "url": "https://github.com/work-template/city-ui/issues"
+  },
+  "author": "houjiandong <946496545@qq.com>",
   "license": "ISC",
   "devDependencies": {
     "@vue/component-compiler-utils": "^2.6.0",

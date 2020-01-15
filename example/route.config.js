@@ -8,11 +8,11 @@ const LOAD_MAP = {
     'zh-CN');
   }
 };
-
+// 加载pages下zh-CN下的模块（这里目前指甲在component）
 const load = function(lang, path) {
   return LOAD_MAP[lang](path);
 };
-
+// 加载zh-CN下的子组件
 const LOAD_DOCS_MAP = {
   'zh-CN': path => {
     return r => require.ensure([], () =>
@@ -25,6 +25,7 @@ const loadDocs = function(lang, path) {
   return LOAD_DOCS_MAP[lang](path);
 };
 
+// 将nav.config.json中的对象转化为实际的router路由（组件从doc文件中获得）
 const registerRoute = (navConfig) => {
   let route = [];
   Object.keys(navConfig).forEach((lang, index) => {
@@ -74,7 +75,7 @@ const registerRoute = (navConfig) => {
 };
 
 let route = registerRoute(navConfig);
-
+// 生成横向的菜单组
 const generateMiscRoutes = function(lang) {
   let guideRoute = {
     path: `/${ lang }/guide`, // 指南
@@ -132,6 +133,7 @@ langs.forEach(lang => {
   route = route.concat(generateMiscRoutes(lang.lang));
 });
 
+// 用于自己玩自己的组件
 route.push({
   path: '/play',
   name: 'play',
