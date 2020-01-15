@@ -9,10 +9,11 @@
   "main": "./src/index.js",
   "scripts": {
     "bootstrap": "npm i || yarn",
+    "build:file": "node build/bin/build-entry.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config build/webpack.prod.js --mode=production --display-used-exports",
-    "dev": "webpack-dev-server --config build/webpack.dev.js --mode=development --open",
-    "dev:doc": "webpack-dev-server --config build/webpack.demo.js --mode=development"
+    "dev:doc": "webpack-dev-server --config build/webpack.demo.js --mode=development",
+    "dev:play": "cross-env NODE_ENV=development PLAY_ENV=true webpack-dev-server --config build/webpack.demo.js --mode=development --open"
   },
   "bugs": {
     "url": "https://github.com/work-template/city-ui/issues"
