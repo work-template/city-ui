@@ -1,45 +1,42 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn
+  C:\Program Files\nodejs\node.exe C:\Users\jin56\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Program Files\TortoiseSVN\bin;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\AppServ\Apache24\bin;C:\AppServ\php5;C:\AppServ\MySQL\bin;C:\Program Files\Java\jdk1.8.0_151\bin;C:\Program Files\Java\jdk1.8.0_151\jre\bin;C:\works\apache-maven-3.5.2\bin;C:\Users\jin56\AppData\Local\Microsoft\WindowsApps;C:\Users\jin56\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files (x86)\SSH Communications Security\SSH Secure Shell;C:\Users\jin56\AppData\Roaming\npm
 
 Yarn version: 
-  1.17.3
+  1.7.0
 
 Node version: 
-  10.16.0
+  10.15.1
 
 Platform: 
-  darwin x64
+  win32 x64
 
 Trace: 
-  Error: http://10.12.102.194:4873/markdown-it/-/markdown-it-10.0.0.tgz: Request failed "500 Internal Server Error"
-      at ResponseError.ExtendableBuiltin (/usr/local/lib/node_modules/yarn/lib/cli.js:696:66)
-      at new ResponseError (/usr/local/lib/node_modules/yarn/lib/cli.js:802:124)
-      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:66900:16)
-      at Request.emit (events.js:198:13)
-      at Request.module.exports.Request.onRequestResponse (/usr/local/lib/node_modules/yarn/lib/cli.js:141341:10)
-      at ClientRequest.emit (events.js:203:15)
-      at HTTPParser.parserOnIncomingClient [as onIncoming] (_http_client.js:556:21)
-      at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
-      at Socket.socketOnData (_http_client.js:442:20)
-      at Socket.emit (events.js:198:13)
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\jin56\AppData\Local\Yarn\Cache\v1\npm-ms-2.1.2-d09d1f357b443f493382a8eb3ccd183872ae6009\package.json' -> 'C:\Users\jin56\Desktop\ttt\city-ui\node_modules\@babel\core\node_modules\ms\package.json'
 
 npm manifest: 
   {
-    "name": "element-ui",
+    "name": "city-ui",
     "version": "1.0.0",
-    "description": "",
+    "repository": {
+      "url": "https://github.com/work-template/city-ui.git",
+      "type": "gogs"
+    },
+    "description": "ui package base element-ui",
     "main": "./src/index.js",
     "scripts": {
-      "bootstrap": "npm i",
+      "bootstrap": "npm i || yarn",
       "test": "echo \"Error: no test specified\" && exit 1",
       "build": "webpack --config build/webpack.prod.js --mode=production --display-used-exports",
       "dev": "webpack-dev-server --config build/webpack.dev.js --mode=development --open",
       "dev:doc": "webpack-dev-server --config build/webpack.demo.js --mode=development"
     },
-    "author": "",
+    "bugs": {
+      "url": "https://github.com/work-template/city-ui/issues"
+    },
+    "author": "houjiandong <946496545@qq.com>",
     "license": "ISC",
     "devDependencies": {
       "@vue/component-compiler-utils": "^2.6.0",
@@ -153,7 +150,7 @@ npm manifest:
       "vue-work-p": "^2.0.0",
       "webpack": "^4.39.2",
       "webpack-bundle-analyzer": "^3.6.0",
-      "webpack-dev-server": "^3.8.0",
+      "webpack-dev-server": "^3.10.1",
       "webpack-merge": "^4.2.1",
       "webpack-node-externals": "^1.7.2"
     },
