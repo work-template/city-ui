@@ -10,8 +10,8 @@ import MainHeader from './components/header';
 import SideNav from './components/side-nav';
 import FooterNav from './components/footer-nav';
 
-import 'packages/theme-chalk/src/index.scss'; // element-ui的总样式
-import './demo-styles/index.scss'; // doc的样式
+import 'packages/theme-chalk/src/index.scss';
+import './demo-styles/index.scss'; 
 import './assets/styles/common.css';
 import './assets/styles/fonts/style.css';
 import icon from './icon.json';

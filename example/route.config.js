@@ -1,6 +1,6 @@
-import navConfig from './nav.config';
+import navConfig from './nav.config'; // 根据语言书写组件功能清单
 import langs from './i18n/route';
-
+// 生成加载vue文件的路由组件
 const LOAD_MAP = {
   'zh-CN': name => {
     return r => require.ensure([], () =>
