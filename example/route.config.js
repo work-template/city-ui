@@ -29,6 +29,7 @@ const loadDocs = function(lang, path) {
 const registerRoute = (navConfig) => {
   let route = [];
   Object.keys(navConfig).forEach((lang, index) => {
+    debugger
     let navs = navConfig[lang];
     route.push({
       path: `/${ lang }/component`,

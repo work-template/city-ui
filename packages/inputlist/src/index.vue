@@ -20,7 +20,9 @@
               ],
               model: {},
               search() {},
-              dealModel() {}
+              dealModel() {},
+              showLine: 2,
+              spanLength: 8
             }
           }
         }
@@ -32,6 +34,7 @@
     },
     data() {
       return {
+        showAll: false
       };
     },
     methods: {
@@ -45,6 +48,7 @@
         }
         return types[item.type](h, item)
       },
+      // 渲染选择框
       renderSelect(h, item) {
         let self = this
          let placeholders = {
@@ -52,30 +56,59 @@
           input: '请输入'
         }
         let placeholder = item.placeholder || (placeholders[item.type] + item.label)
-        return h('elSelect',
-          {
-              domProps: {
-                value: self.inputList.model[item.prop]
-              },
-              props: {
-                disabled: item.disabled,
-                value: self.inputList.model[item.prop]
-              },
-              on: {
-                input: function (event) {
-                  self.inputList.model[item.prop] = event
-                }
-              }
-          },
-          this.renderOptions(h, item)
+        return (
+           <div class='el-filter-content-com'>
+            <el-select value={this.inputList.model[item.prop]}
+             disabled={item.disabled} 
+             on-change = {val => this.change(val, item)}
+             on-input={val => this.inputList.model[item.prop] = val}>
+              {this.renderOptions(h, item)}
+            </el-select>
+           </div>
         )
       },
+      // 渲染input列表
       renderInput(h, item) {
         return (
-          <el-input></el-input>
+          <div class='el-filter-content-com'>
+            <el-input value={this.inputList.model[item.prop]} 
+            disabled={item.disabled} 
+            on-input={val => {this.inputEvent(val, item)}}
+            on-change = {val => this.change(val, item)}
+            ></el-input>
+            </div>
         )
       },
-      renderDate() {},
+      // 每一项的change事件
+      change(val, item) {
+        this.inputList[item.prop] = item.type === 'in' ? val.trim() : val
+        if (item.change) {
+          item.change()
+        }
+      },
+      // 每一项的input事件
+      inputEvent(val, item) {
+        this.inputList.model[item.prop] = item.type === 'in' ? val.trim() : val
+        if (item.change) {
+          item.change()
+        }
+      },
+      // 渲染日期时间框
+      renderDate(h, item) {
+        return(
+           <div class='el-filter-content-com'>
+              <el-date-picker
+              type={item.type}
+              value={this.inputList.model[item.prop]}
+              placeholder = {item.placeholder}
+              format = {item.format || 'yyyy-MM-dd'}
+              value-format = {item.valueFormat}
+              on-input = {(val) => {this.inputEvent(val, item)}}
+              ></el-date-picker>
+           </div>
+        )
+      },
+      // 渲染选择框的每一项
       renderOptions(c, options) {
         if (options.getList) {
           options.getList().then((data) => {
@@ -108,26 +141,117 @@
       },
       // 生成布局
       renderLayout(h, list) {
+        let dom = this.inputList
         return list.map((item,index) => {
+          if (this.showAll || (index+1)*(dom.spanLength) <= (dom.showLine)*24)
           return (
-            <el-col span={item.col || 8}>
-              <span>{item.label + '：'}</span>
+            <el-col span={item.col || 8}
+            >
+              <div class='filter-list-wrap'>
+              <span class='filter-label'>{item.label + '：'}</span>
               {this.renderItems(h, item)}
+              </div>
             </el-col>
           )
         })
+      },
+      // 渲染查看更多按钮
+      renderShowMore(h) {
+        let dom = this.inputList
+        let data = dom.data
+        if (data.length/(24/(dom.spanLength)) > dom.showLine) {
+          return (
+            <el-button type="text" 
+            onClick = {
+              this.changeShow
+            }
+            >
+              {
+                this.showAll ? "收起" : '展开'
+              }
+            </el-button>
+          )
+        }
+      },
+      renderIcon(h) {
+        let dom = this.inputList
+        let data = dom.data
+        if (data.length/(24/(dom.spanLength)) > dom.showLine) {
+          return (
+            <i 
+            class={this.showAll ? 'el-icon-arrow-down': 'el-icon-arrow-up'}
+            onClick = {
+              this.changeShow
+            }
+            >
+            </i>
+          )
+        }
+      },
+      // 切换展开收起按钮
+      changeShow() {
+        this.showAll = !this.showAll
       }
     },
     render(h) {
+      let inputlist = this.inputList
+      let data = inputlist.data
       return (
-        <div class='el-inputlist-com'>
-        <el-row>
-        {
-          this.renderLayout(h, this.inputList.data)
-        }
-        </el-row>
-        </div>
+         <el-collapse-transition>
+          <div class='el-inputlist-com'>
+            <el-row gutter={20}>
+            {
+              this.renderLayout(h, this.inputList.data)
+            }
+            </el-row>
+            <div class='el-filter-btn-list'>
+              <div class='el-filter-btn-left'>
+              {
+                this.$scopedSlots.default()
+              }
+              </div>
+              <div class='el-filter-btn-right'>
+                <el-button type='primary'>查询</el-button>
+                <el-button>重置</el-button>
+                {this.renderShowMore(h)}
+                {this.renderIcon(h)}
+              </div>
+            </div>
+          </div>
+        </el-collapse-transition>
       )
     }
   };
 </script>
+<style lang="scss">
+.el-inputlist-com {
+  .filter-list-wrap {
+    width: 100%;
+    align-items: center;
+    margin-bottom: 20px;
+    display: flex;
+    .filter-label {
+      width: 120px;
+      box-sizing: border-box;
+      padding-right: 5px;
+      text-align: right;
+    }
+    .el-filter-content-com {
+      flex: 1;
+      .el-date-editor.el-input {
+        width: 100%;
+      }
+      .el-select {
+        width: 100%;
+      }
+    }
+  }
+  .el-filter-btn-list {
+    display: flex;
+    .el-filter-btn-right {
+      flex: 1;
+      text-align: right;
+    }
+  }
+}
+</style>

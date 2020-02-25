@@ -1,14 +1,16 @@
-<template>
+## inputlist 列表页筛选组件功能说明
+
+通过inputlist组件，迅速的创建后台管理系统中列表页的筛选功能
+
+:::通过传递props我们可以很快捷的创建出来一个简单的筛选功能ui。
+```html
   <div style="margin: 20px;">
     <!-- <el-select v-model='inputList'></el-select> -->
     <InputList :inputList='inputList'>
     <el-button>test</el-button>
     </InputList> 
   </div>
-</template>
-
-<script>
-  import InputList from '../../packages/inputlist/index.js'
+  <script>
   export default {
     data() {
       return {
@@ -137,3 +139,5 @@
 
   };
 </script>
+```
+:::

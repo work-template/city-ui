@@ -32,6 +32,15 @@
               "title": "Layout 布局"
             }
           ]
+        },
+        {
+          "groupName": "extend",
+          "list": [
+            {
+              "path": "/inputlist",
+              "title": "筛选组件"
+            }
+          ]
         }
       ]
     }

@@ -1,14 +1,16 @@
-<template>
-  <div style="margin: 20px;">
-    <!-- <el-select v-model='inputList'></el-select> -->
-    <InputList :inputList='inputList'>
+## Layout 布局
+
+通过InputList组件可以很方便的生成列表页筛选组件。
+
+### 简单页面你
+
+:::demo
+```html
+ <input-list :inputList='inputList'>
     <el-button>test</el-button>
-    </InputList> 
-  </div>
-</template>
+</input-list> 
 
 <script>
-  import InputList from '../../packages/inputlist/index.js'
   export default {
     data() {
       return {
@@ -130,10 +132,8 @@
           console.log(val)
         }
       }
-    },
-    components: {
-      InputList
-    },
-
+    }
   };
 </script>
+```
+:::
