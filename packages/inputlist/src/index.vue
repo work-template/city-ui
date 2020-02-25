@@ -83,7 +83,7 @@
       change(val, item) {
         this.inputList[item.prop] = item.type === 'in' ? val.trim() : val
         if (item.change) {
-          item.change()
+          item.change.call(this.$parent, val, item)
         }
       },
       // 每一项的input事件
@@ -155,6 +155,11 @@
           )
         })
       },
+      renderScope(h) {
+        if (this.$scopedSlots && this.$scopedSlots.default) {
+          return this.$scopedSlots.default()
+        }
+      },
       // 渲染查看更多按钮
       renderShowMore(h) {
         let dom = this.inputList
@@ -207,7 +212,7 @@
             <div class='el-filter-btn-list'>
               <div class='el-filter-btn-left'>
               {
-                this.$scopedSlots.default()
+                this.renderScope(h)
               }
               </div>
               <div class='el-filter-btn-right'>

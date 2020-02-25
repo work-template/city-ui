@@ -8,7 +8,6 @@
 </template>
 
 <script>
-  import InputList from '../../packages/inputlist/index.js'
   export default {
     data() {
       return {
@@ -18,7 +17,7 @@
             text: 2,
             inputVal: 1,
             date: '',
-            aa: ''
+            food: 99
           },
           data: [
             {
@@ -35,87 +34,25 @@
                   label: '香蕉',
                   value: 1
                 }
-              ]
-            },
-            {
-              type: 'input',
-              label: '测试input',
-              col: 8,
-              prop: 'inputVal'
-            },
-            {
-              type: 'date',
-              prop: 'date',
-              label: '日期测试'
+              ],
+              change(val,item) {
+                this.foodChange(val, item)
+              }
             },
             {
               label: 'aa',
-              prop: 'aa',
-              type: 'input'
-            },
-            {
+              prop: 'food',
               type: 'sel',
-              label: '测试',
-              col: 8,
-              prop: 'text',
               sels: [
                 {
-                  label: '苹果',
-                  value: 2
+                  label: '馒头',
+                  value : 99
                 },
                 {
-                  label: '香蕉',
-                  value: 1
+                  label: '米饭',
+                  value: 100
                 }
               ]
-            },
-            {
-              type: 'input',
-              label: '测试input',
-              col: 8,
-              prop: 'inputVal'
-            },
-            {
-              type: 'date',
-              prop: 'date',
-              label: '日期测试'
-            },
-            {
-              label: 'aa',
-              prop: 'aa',
-              type: 'input'
-            },
-            {
-              type: 'sel',
-              label: '测试',
-              col: 8,
-              prop: 'text',
-              sels: [
-                {
-                  label: '苹果',
-                  value: 2
-                },
-                {
-                  label: '香蕉',
-                  value: 1
-                }
-              ]
-            },
-            {
-              type: 'input',
-              label: '测试input',
-              col: 8,
-              prop: 'inputVal'
-            },
-            {
-              type: 'date',
-              prop: 'date',
-              label: '日期测试'
-            },
-            {
-              label: 'aa',
-              prop: 'aa',
-              type: 'input'
             }
           ],
           spanLength: 8,
@@ -123,17 +60,10 @@
         }
       };
     },
-    watch: {
-      inputList: {
-        deep: true,
-        handler(val) {
-          console.log(val)
-        }
+    methods: {
+      foodChange(val, item) {
+        this.inputList.model.food = ''
       }
-    },
-    components: {
-      InputList
-    },
-
+    }
   };
 </script>
