@@ -1,6 +1,5 @@
 <template>
   <div style="margin: 20px;">
-    <!-- <el-select v-model='inputList'></el-select> -->
     <InputList :inputList='inputList'>
     <el-button>test</el-button>
     </InputList> 
@@ -11,7 +10,6 @@
   export default {
     data() {
       return {
-        input: 'Hello Element UI!',
         inputList: {
           model: {
             text: 2,
@@ -56,13 +54,25 @@
             }
           ],
           spanLength: 8,
-          showLine: 1
+          showLine: 1,
+          search() {
+            this.search()
+          },
+          refresh() {
+            this.refresh()
+          }
         }
       };
     },
     methods: {
       foodChange(val, item) {
         this.inputList.model.food = ''
+      },
+      search() {
+        console.log('search')
+      },
+      refresh() {
+        console.log(refresh)
       }
     }
   };

@@ -41,6 +41,13 @@
       // 渲染筛选的每一项
       renderItems(h, item) {
         let self = this
+         let placeholders = {
+          sel: '请选择',
+          input: '请输入',
+          date: '请选择'
+        }
+        let placeholder = item.placeholder || (placeholders[item.type] + item.label)
+        item.placeholder = placeholder
         let types = {
           sel: self.renderSelect,
           input: self.renderInput,
@@ -50,12 +57,6 @@
       },
       // 渲染选择框
       renderSelect(h, item) {
-        let self = this
-         let placeholders = {
-          sel: '请选择',
-          input: '请输入'
-        }
-        let placeholder = item.placeholder || (placeholders[item.type] + item.label)
         return (
            <div class='el-filter-content-com'>
             <el-select value={this.inputList.model[item.prop]}
@@ -98,11 +99,14 @@
         return(
            <div class='el-filter-content-com'>
               <el-date-picker
-              type={item.type}
+              type={item.dateType || 'date'}
               value={this.inputList.model[item.prop]}
               placeholder = {item.placeholder}
-              format = {item.format || 'yyyy-MM-dd'}
-              value-format = {item.valueFormat}
+              disabled = {item.disabled}
+              start-placeholder = {item.start}
+              end-placeholder = {item.end}
+              format = {item.format || 'yyyy/MM/dd'}
+              value-format = {item.formatValue || 'yyyy/MM/dd'}
               on-input = {(val) => {this.inputEvent(val, item)}}
               ></el-date-picker>
            </div>
@@ -145,7 +149,7 @@
         return list.map((item,index) => {
           if (this.showAll || (index+1)*(dom.spanLength) <= (dom.showLine)*24)
           return (
-            <el-col span={item.col || 8}
+            <el-col span={dom.spanLength || 8}
             >
               <div class='filter-list-wrap'>
               <span class='filter-label'>{item.label + '：'}</span>
@@ -196,6 +200,17 @@
       // 切换展开收起按钮
       changeShow() {
         this.showAll = !this.showAll
+      },
+      // 筛选功能
+      search() {
+        this.inputList.search && this.inputList.search.call(this.$parent, this.inputList.model)
+      },
+      // 重置功能
+      refresh() {
+        Object.keys(this.inputList.model).forEach((item) => {
+          this.inputList.model[item] = ''
+        })
+        this.inputList.refresh && this.inputList.refresh.call(this.$parent)
       }
     },
     render(h) {
@@ -216,8 +231,8 @@
               }
               </div>
               <div class='el-filter-btn-right'>
-                <el-button type='primary'>查询</el-button>
-                <el-button>重置</el-button>
+                <el-button type='primary' size='medium' icon='el-icon-refresh-right' onClick={this.search}>查询</el-button>
+                <el-button size='medium' icon="el-icon-search" onClick={this.refresh}>重置</el-button>
                 {this.renderShowMore(h)}
                 {this.renderIcon(h)}
               </div>
@@ -236,10 +251,14 @@
     margin-bottom: 20px;
     display: flex;
     .filter-label {
-      width: 120px;
-      box-sizing: border-box;
-      padding-right: 5px;
-      text-align: right;
+        width: 80px;
+        text-align: right;
+        overflow: hidden;
+        word-break: break-all;
+        word-wrap: break-word;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.85);
+        margin-right: 10px;
     }
     .el-filter-content-com {
       flex: 1;
