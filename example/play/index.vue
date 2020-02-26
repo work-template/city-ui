@@ -51,6 +51,13 @@
                   value: 100
                 }
               ]
+            },
+            {
+              prop: 'date',
+              label: '日期',
+              type: 'date',
+              valueFormat: 'yyyy/MM/dd hh',
+              format: 'yyyy/MM/dd hh'
             }
           ],
           spanLength: 8,

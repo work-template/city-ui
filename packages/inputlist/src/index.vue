@@ -2,6 +2,14 @@
   import elSelect from 'element-ui/packages/select'
   import elInput from 'element-ui/packages/input'
   import elOption from 'element-ui/packages/select/src/option'
+  const defaultVal = {
+    data: [],
+    model: {},
+    search() {},
+    change() {},
+    showLine: 2,
+    spanLength: 8
+  }
   export default {
     name: 'InputList',
     props: {
@@ -20,7 +28,7 @@
               ],
               model: {},
               search() {},
-              dealModel() {},
+              change() {},
               showLine: 2,
               spanLength: 8
             }
@@ -44,14 +52,17 @@
          let placeholders = {
           sel: '请选择',
           input: '请输入',
-          date: '请选择'
+          date: '请选择',
+          time: '请选择',
+          'dateTime': '请选择',
         }
         let placeholder = item.placeholder || (placeholders[item.type] + item.label)
         item.placeholder = placeholder
         let types = {
           sel: self.renderSelect,
           input: self.renderInput,
-          date: self.renderDate
+          date: self.renderDate,
+          time: self.renderTime
         }
         return types[item.type](h, item)
       },
@@ -105,10 +116,29 @@
               disabled = {item.disabled}
               start-placeholder = {item.start}
               end-placeholder = {item.end}
+              range-separator = {item.rangeSeparator}
+              format = {item.format || 'yyyy/MM/dd'}
+              value-format = {item.valueFormat || 'yyyy/MM/dd'}
+              on-input = {(val) => {this.inputEvent(val, item)}}
+              ></el-date-picker>
+           </div>
+        )
+      },
+      renderTime(h, item) {
+        return(
+           <div class='el-filter-content-com'>
+              <el-time-select
+              value={this.inputList.model[item.prop]}
+              placeholder = {item.placeholder}
+              disabled = {item.disabled}
+              start-placeholder = {item.start}
+              end-placeholder = {item.end}
+              range-separator = {item.rangeSeparator}
+              is-range = {item.isRange}
               format = {item.format || 'yyyy/MM/dd'}
               value-format = {item.formatValue || 'yyyy/MM/dd'}
               on-input = {(val) => {this.inputEvent(val, item)}}
-              ></el-date-picker>
+              ></el-time-select>
            </div>
         )
       },
@@ -211,9 +241,17 @@
           this.inputList.model[item] = ''
         })
         this.inputList.refresh && this.inputList.refresh.call(this.$parent)
+      },
+      init() {
+        for(let i in this.inputList) {
+          if (!i) {
+            this.inputList[i] = defaultVal[i]
+          }
+        }
       }
     },
     render(h) {
+      this.init()
       let inputlist = this.inputList
       let data = inputlist.data
       return (
